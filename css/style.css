@@ -39,7 +39,7 @@ main {
     position: absolute;
     bottom: 0px;
     right: .5em;
-    font-size: 2.5em;
+    font-size: 2.25em;
 }
 
 .display .current {
@@ -82,17 +82,32 @@ button {
 
 .special-chars {
     background-color: lightgray;
+    transition: 0.5s;
+}
+
+.special-chars:hover {
+    background-color: #fff;
 }
 
 .operator {
     background-color: orange;
     font-size: 2.5em;
     color: #eee;
+    transition: 0.5s;
+}
+
+.operator:hover {
+    background-color: #fdc63c; 
 }
 
 .numbers {
     background-color: #444;
     color: white;
+    transition: .5s;
+}
+
+.numbers:hover {
+    background-color: #666;
 }
 
 .home-bar {
