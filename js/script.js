@@ -14,12 +14,10 @@ const numbersList = [...numbers];
 numbersList.push(negativeButton)
 
 numbersList.forEach(number => number.addEventListener("click", enterInput));
-operators.forEach(operator => operator.addEventListener("click", operate));
+operators.forEach(operator => operator.addEventListener("click", handleOperator));
 cButton.addEventListener("click", deleteInput);
 
 acButton.onclick = () => currentText.textContent = "0";
-
-
 
 
 const add = (num1, num2) => num1 + num2;
@@ -27,8 +25,10 @@ const subtract = (num1, num2) => num1 - num2;
 const multiply = (num1, num2) => num1 * num2;
 const divide = (num1, num2) => !num2 ? "ERR" : num1 / num2;
 
-function operate(operator, num1, num2) {
+function operate(num1, operator, num2) {
     let result = 0;
+    num1 = Number(num1);
+    num2 = Number(num2);
     switch (operator) {
         case '+':
             result = add(num1, num2);
@@ -36,9 +36,9 @@ function operate(operator, num1, num2) {
         case '-':
             result = subtract(num1, num2);
             break;
-        case '*':
+        case 'x':
             returnresult = multiply(num1, num2);
-        case '/':
+        case '÷':
             result = divide(num1, num2);
             break;
         default:
@@ -76,8 +76,6 @@ function enterInput() {
             }
         }
 
-        console.log(currentText.textContent.length);
-
         if (currentText.textContent.length <= 6) {
             fontSize = "5em";
         } else if (currentText.textContent.length <= 7) {
@@ -96,8 +94,6 @@ function enterInput() {
                 currentText.textContent = "-" + currentText.textContent;
             }
         }
-        
-        console.log(currentText.textContent.length);
 
         if (currentText.textContent.length <= 6) {
             fontSize = "5em";
@@ -123,8 +119,6 @@ function deleteInput() {
         }
     }
 
-    console.log(currentText.textContent.length);
-
     if (currentText.textContent.length <= 6) {
         fontSize = "5em";
     } else if (currentText.textContent.length <= 7) {
@@ -135,7 +129,29 @@ function deleteInput() {
         fontSize = "3.75em";
     }
     currentText.style.fontSize = fontSize;
+
+    operation.textContent = "";
 }
+
+
+function handleOperator() {
+    // console.log(this.textContent);
+    if (!operation.length) {
+        operation = currentText.textContent + ` ${this.textContent} `;
+        this.classList.add("active");
+        currentText.textContent = "0";
+        currentText.style.fontSize = "5em";
+        console.log(operation);
+    } else {
+        operation += currentText.textContent;
+        console.log(operation);
+        fullOperation = operation.split(' ');
+        console.log(fullOperation)
+        console.log(operate(...fullOperation));
+        currentText.textContent = operate(...fullOperation);
+    }
+}
+
 
 
 

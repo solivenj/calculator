@@ -35,20 +35,8 @@ main {
     flex-direction: column;
 }
 
-.display .stored {
-    height: 50%;
-    position: relative;
-}
-
-.display .stored #stored-text {
-    position: absolute;
-    bottom: 0px;
-    right: .5em;
-    font-size: 2.25em;
-}
-
 .display .current {
-    height: 50%;
+    height: 100%;
     position: relative;
 }
 
@@ -102,6 +90,22 @@ button {
 }
 
 .operator:hover {
+    background-color: #fdc63c; 
+}
+
+.operator.active {
+    background-color: #eee;
+    color: orange;
+}
+
+.equals {
+    background-color: orange;
+    font-size: 2.5em;
+    color: #eee;
+    transition: 0.5s;
+}
+
+.equals:hover {
     background-color: #fdc63c; 
 }
 
