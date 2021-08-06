@@ -1,0 +1,108 @@
+html {
+    background-color: black;
+    font-family: Helvetica, sans-serif;
+}
+
+main {
+    background-color: black;
+    /* margin: auto; */
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 20em;
+    height: 40em;
+    /* height: 700px; */
+    margin: auto;
+    border-radius: 50px;
+    padding: 1.25em;
+    border: 3px solid white;
+}
+
+.display {
+    width: 100%;
+    min-height: 30%;
+    color: white;
+    /* position: absolute; */
+    text-align: right;
+    bottom: 0; 
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.display .stored {
+    height: 50%;
+    position: relative;
+}
+
+.display .stored #stored-text {
+    position: absolute;
+    bottom: 0px;
+    right: .5em;
+    font-size: 2.5em;
+}
+
+.display .current {
+    height: 50%;
+    position: relative;
+}
+
+.display .current #current-text {
+    position: absolute;
+    bottom: 0px;
+    right: .15em;
+    font-size: 5em;
+    /* padding: 0 0.1em 0 0.1em; */
+}
+
+.buttons {
+    display: grid;
+    height: 70%;
+    width: 100%;
+    gap: .5em;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    padding-bottom: 1.5em;
+}
+
+button {
+    border-radius: 200px;
+        /* height: 75px;
+        width: 75px; */
+    font-size: 1.9em;
+    max-height: 100px;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+#zero {
+    grid-column: span 2;
+}
+
+.special-chars {
+    background-color: lightgray;
+}
+
+.operator {
+    background-color: orange;
+    font-size: 2.5em;
+    color: #eee;
+}
+
+.numbers {
+    background-color: #444;
+    color: white;
+}
+
+.home-bar {
+    background-color: lightgray;
+    width: 40%;
+    height: 1%;
+    margin: auto;
+    border-radius: 10px;
+    margin-bottom: -0.5em;
+}
+
+
+
