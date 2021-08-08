@@ -9,11 +9,9 @@ const operators = buttons.querySelectorAll(".operator");
 const equals = document.getElementById("equals");
 
 let firstNum = undefined;
-let firstOperation = undefined;
 let operation = undefined;
 let secondNum = undefined;
-// let secondOperation = undefined;
-let getNextNum = undefined;
+let resetScreen = undefined;
 
 const numbersList = [...numbers];
 numbersList.push(negativeButton)
@@ -82,6 +80,7 @@ function setFontSize() {
 
 function enterInput() {
     let value = this.textContent;
+    
     if (!operation) {
         if (currentText.textContent == "0") {
             value == "+/-" ? handleNegative() : currentText.textContent = value;
@@ -119,47 +118,16 @@ function deleteInput() {
     }
 
     setFontSize();
-    // firstOperation.textContent = "";
 }
 
 
 function handleOperator() {
-    if (!firstNum) {
-        // currentText is first num
-        firstNum = currentText.textContent;
-        operation = this.textContent;
-        this.classList.add("active");
-        
-
-    } else if (!secondNum) {
-        secondNum = currentText.textContent;
-        if (operation) {
-            // ready to operate
-            // secondNum = currentText.textContent;
-            result = operate(firstNum, operation, secondNum);
-            console.log(result);
-            currentText.textContent = result;
-
-            firstNum = result;
-            
-            if (this.textContent != "=") {
-                removeActiveButton();
-                this.classList.add("active");
-                operation = this.textContent;
-            } else {
-                removeActiveButton();
-                operation = undefined;
-            }
-            
-            secondNum = undefined;
-        } else {
-            operation = this.textContent;
-            if (this.textContent != "=") {
-                removeActiveButton();
-                this.classList.add("active");
-            }
-        }
+    if (operation) {
+        handleEquals();
     }
+    firstNum = currentText.textContent;
+    operation = this.textContent;
+    resetScreen = true;
 }
 
 function removeActiveButton() {
@@ -170,9 +138,8 @@ function removeActiveButton() {
 function clearCalc() {
     currentText.textContent = "0";
     firstNum = undefined;
-    firstOperation = undefined;
+    operation = undefined;
     secondNum = undefined;
-    secondOperation = undefined;
     
     let active = document.querySelector(".active");
     if (active) active.classList.remove("active");
@@ -182,13 +149,11 @@ function handleEquals() {
     if (operation) {
         secondNum = currentText.textContent;
         result = operate(firstNum, operation, secondNum);
-        console.log(result);
-        currentText.textContent = result;
+        currentText.textContent = result; // TODO: Round to screen
         setFontSize();
 
         removeActiveButton();
         operation = undefined;
-        secondNum = undefined;
     }
 }
 
