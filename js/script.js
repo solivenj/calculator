@@ -6,6 +6,7 @@ const acButton = buttons.querySelector("#ac");
 const cButton = buttons.querySelector("#c");
 const negativeButton = buttons.querySelector("#negative");
 const operators = buttons.querySelectorAll(".operator");
+const decimal = buttons.querySelector("#decimal");
 const equals = document.getElementById("equals");
 
 let firstNum = undefined;
@@ -13,13 +14,15 @@ let operation = undefined;
 let secondNum = undefined;
 let resetScreen = undefined;
 
-const numbersList = [...numbers];
+let numbersList = [...numbers];
+numbersList.pop(); // remove decimal button
 numbersList.push(negativeButton)
 
 numbersList.forEach(number => number.addEventListener("click", enterInput));
 operators.forEach(operator => operator.addEventListener("click", handleOperator));
 equals.addEventListener('click', handleEquals);
-cButton.addEventListener("click", deleteInput);
+cButton.addEventListener('click', deleteInput);
+decimal.addEventListener('click', handleDecimal);
 
 acButton.addEventListener('click', clearCalc);
 
@@ -31,7 +34,8 @@ const divide = (num1, num2) => !num2 ? "ERR" : num1 / num2;
 
 function operate(num1, operator, num2) {
     let result = 0;
-    num1 = Number(num1);
+    num1 = Number.parseFloat(num1);
+    // num1 = Number(num1);
     num2 = Number(num2);
     switch (operator) {
         case '+':
@@ -60,6 +64,8 @@ function handleNegative() {
     } else {
         currentText.textContent = "-" + currentText.textContent;
     }
+
+    setFontSize();
 }
 
 function setFontSize() {
@@ -73,6 +79,8 @@ function setFontSize() {
         fontSize = "4em";
     } else if (currentText.textContent.length <= 9) {
         fontSize = "3.75em";
+    } else {
+        fontSize = "3.5em";
     }
 
     currentText.style.fontSize = fontSize;
@@ -80,31 +88,29 @@ function setFontSize() {
 
 function enterInput() {
     let value = this.textContent;
-    
-    if (!operation) {
-        if (currentText.textContent == "0") {
-            value == "+/-" ? handleNegative() : currentText.textContent = value;
-        } else if (currentText.textContent == "-0") {
-            value == "+/-" ? handleNegative() : currentText.textContent = currentText.textContent[0] + value;
-        } else if (currentText.textContent.length < 9) {
-            value == "+/-" ? handleNegative() : currentText.textContent += value;
-            setFontSize();
-        } else {
-            if (value == "+/-") handleNegative();
-            currentText.textContent.length <= 9 ? setFontSize() : currentText.style.fontSize = "3.5em";
-        }
-    } else {
-        if (currentText.textContent == firstNum) {
-            currentText.textContent = "0";
-            value == "+/-" ? handleNegative() : currentText.textContent = value;
-        } else if (currentText.textContent.length < 9) {
-            value == "+/-" ? handleNegative() : currentText.textContent += value;
-            setFontSize();
-        } else {
-            if (value == "+/-") handleNegative();
-            currentText.textContent.length <= 9 ? setFontSize() : currentText.style.fontSize = "3.5em";
-        }
+    if (currentText.textContent == "0" || resetScreen) {
+        reset();
     }
+    
+
+    if (currentText.textContent.length < 9) {
+        if (value == "+/-") {
+            handleNegative();
+            return
+        }
+        currentText.textContent += value;
+        setFontSize()
+    } else {
+        if (value == "+/-") handleNegative();
+    }
+}
+    
+function handleDecimal() {
+    if (resetScreen) reset()
+    if (currentText.textContent == '')
+        currentText.textContent = '0'
+    if (currentText.textContent.includes('.')) return // don't allow multiple decimals
+    currentText.textContent += '.'
 }
 
 function deleteInput() {
@@ -120,13 +126,20 @@ function deleteInput() {
     setFontSize();
 }
 
+function reset() {
+    currentText.textContent = "";
+    resetScreen = false;
+}
+
 
 function handleOperator() {
-    if (operation) {
+    if (currentText.textContent != firstNum || operation) {
         handleEquals();
     }
     firstNum = currentText.textContent;
     operation = this.textContent;
+    removeActiveButton();
+    this.classList.add("active");
     resetScreen = true;
 }
 
@@ -146,14 +159,41 @@ function clearCalc() {
 }
 
 function handleEquals() {
-    if (operation) {
-        secondNum = currentText.textContent;
-        result = operate(firstNum, operation, secondNum);
-        currentText.textContent = result; // TODO: Round to screen
-        setFontSize();
+    if (!operation || resetScreen || currentText.textContent == "ovf") return;
 
-        removeActiveButton();
-        operation = undefined;
+    secondNum = currentText.textContent;
+    result = operate(firstNum, operation, secondNum);
+    result = roundToScreen(result);
+    currentText.textContent = result.includes('e') ? result : result / 1;
+    currentText.textContent = roundToScreen(result); 
+    setFontSize();
+
+    removeActiveButton();
+    operation = undefined;
+
+}
+
+function roundToScreen(result) {
+    let res = "";
+    if (result.toString().length > 9) {
+        let num = result.toExponential()
+        let numList = num.toString().split('e');
+        let base = Number(numList[0]).toFixed(4);
+        let exp = numList[1];
+
+        if (-9 < exp && exp < 9) {
+            // if number can fit in screen then format it correctly
+            num = Number.parseFloat(num)
+            digits = num.toString().split('.');
+            res = num.toFixed(8 - digits[0].length);
+        } else {
+            // fit exponential notation version of number in string
+            res = `${base.toString()}e${numList[1]}`
+        }
+
+        return res.length > 9 ? 'ovf' : res;
+    } else {
+        return Number.parseFloat(result);
     }
 }
 
