@@ -17,6 +17,19 @@ Operations include:
 ## Features
 
 - Keyboard Support
+
+<center>
+  
+| Buttons | Inputs |
+|:-------:|:------:|
+|    +    |    +   |
+|    -    |    -   |
+|    /    |    ÷   |
+|    *    |    x   |
+|    _    |   +/-  |
+  
+</center>
+
 - Negative Numbers
 - Decimals
 
