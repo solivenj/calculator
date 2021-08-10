@@ -18,13 +18,20 @@ let numbersList = [...numbers];
 numbersList.pop(); // remove decimal button
 numbersList.push(negativeButton)
 
-numbersList.forEach(number => number.addEventListener("click", enterInput));
-operators.forEach(operator => operator.addEventListener("click", handleOperator));
+numbersList.forEach(number => number.addEventListener("click", () => handleInput(number.textContent)));
+operators.forEach(operator => operator.addEventListener("click", () => handleOperator(operator.textContent)));
 equals.addEventListener('click', handleEquals);
-cButton.addEventListener('click', deleteInput);
+cButton.addEventListener('click', handleDelete);
 decimal.addEventListener('click', handleDecimal);
-
 acButton.addEventListener('click', clearCalc);
+
+let operator_conversions = {
+    "+":"+",
+    "-":"-",
+    "/":"÷",
+    "*":"x"
+};
+document.addEventListener('keydown', handleKBInput);
 
 
 const add = (num1, num2) => num1 + num2;
@@ -86,13 +93,9 @@ function setFontSize() {
     currentText.style.fontSize = fontSize;
 }
 
-function enterInput() {
-    let value = this.textContent;
-    if (currentText.textContent == "0" || resetScreen) {
-        reset();
-    }
+function handleInput(value) {
+    if (currentText.textContent == "0" || resetScreen) reset();
     
-
     if (currentText.textContent.length < 9) {
         if (value == "+/-") {
             handleNegative();
@@ -113,7 +116,7 @@ function handleDecimal() {
     currentText.textContent += '.'
 }
 
-function deleteInput() {
+function handleDelete() {
     if (currentText.textContent.length) {
         currentText.textContent = currentText.textContent.slice(0, -1);
         if (currentText.textContent == "-") {
@@ -132,14 +135,15 @@ function reset() {
 }
 
 
-function handleOperator() {
+function handleOperator(value) {
     if (currentText.textContent != firstNum || operation) {
         handleEquals();
     }
     firstNum = currentText.textContent;
-    operation = this.textContent;
+    operation = value;
     removeActiveButton();
-    this.classList.add("active");
+    let currOperation = document.getElementById(`${value}`);
+    currOperation.classList.add("active");
     resetScreen = true;
 }
 
@@ -164,7 +168,7 @@ function handleEquals() {
     secondNum = currentText.textContent;
     result = operate(firstNum, operation, secondNum);
     result = roundToScreen(result);
-    currentText.textContent = result.includes('e') ? result : result / 1;
+    currentText.textContent = result.toString().includes('e') ? result : result / 1;
     currentText.textContent = roundToScreen(result); 
     setFontSize();
 
@@ -197,3 +201,20 @@ function roundToScreen(result) {
     }
 }
 
+function handleKBInput(event) {
+    if (0 <= event.key && event.key <= 9) {
+        handleInput(event.key);
+    } else if (event.key == '=' || event.key == "Enter") {
+        handleEquals();
+    } else if (event.key == '.') {
+        handleDecimal();
+    } else if (event.key == "Backspace") {
+        handleDelete();
+    } else if (event.key == "Escape") {
+        clearCalc();
+    } else if (event.key == '-') {
+        handleInput("+/-");
+    } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+        handleOperator(operator_conversions[event.key]);
+    }
+}
