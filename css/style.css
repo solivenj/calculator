@@ -1,11 +1,11 @@
 html {
     background-color: black;
     font-family: Helvetica, sans-serif;
-    /* height: 100%; */
+    min-height: 100%;
 }
 
 body {
-    height: 100%;
+    /* height: 95vh; */
 }
 
 main {
@@ -14,13 +14,14 @@ main {
     display: flex;
     flex-direction: column;
     gap: 1em;
+    /* max-width: 20em; */
     width: 20em;
     height: 40em;
     /* height: 700px; */
     margin: auto;
     border-radius: 60px;
     padding: 1.25em;
-    border: 3px solid white;
+    border: 2.5px solid white;
 }
 
 .display {
@@ -51,9 +52,9 @@ main {
 .buttons {
     display: grid;
     height: 70%;
-    width: 100%;
+    min-width: 100%;
     gap: .5em;
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 72px);
     grid-template-columns: repeat(4, 1fr);
     padding-bottom: 1.5em;
 }
@@ -62,10 +63,10 @@ button {
     border-radius: 200px;
         /* height: 75px;
         width: 75px; */
-    font-size: 1.9em;
-    max-height: 100px;
-    width: 100%;
-    height: 100%;
+    font-size: 5vmin;
+    /* min-height: 100%; */
+    /* width: 100%; */
+    /* height: 100%; */
     border: none;
 }
 
@@ -126,6 +127,10 @@ button {
     margin: auto;
     border-radius: 10px;
     margin-bottom: -0.5em;
+}
+
+@media only screen and (max-width: 800px) {
+
 }
 
 

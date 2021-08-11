@@ -149,6 +149,7 @@ function handleOperator(value) {
 
 function removeActiveButton() {
     let active = document.querySelector(".active"); // shoud only be one active
+    console.log(active);
     if (active) active.classList.remove("active");
 }
 
@@ -168,6 +169,7 @@ function handleEquals() {
     secondNum = currentText.textContent;
     result = operate(firstNum, operation, secondNum);
     result = roundToScreen(result);
+    console.log(result);
     currentText.textContent = result.toString().includes('e') ? result : result / 1;
     currentText.textContent = roundToScreen(result); 
     setFontSize();
