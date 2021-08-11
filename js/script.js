@@ -155,6 +155,7 @@ function removeActiveButton() {
 
 function clearCalc() {
     currentText.textContent = "0";
+    setFontSize();
     firstNum = undefined;
     operation = undefined;
     secondNum = undefined;
