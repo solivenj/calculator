@@ -127,6 +127,10 @@ button {
     .display .current #current-text {
         margin-bottom: -.5em;
     }
+
+    .main {
+        gap: 0em;
+    }
 }
 
 
