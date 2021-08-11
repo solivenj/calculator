@@ -41,4 +41,4 @@ During testing, I noticed that if I had clicked on a button, and then pressed th
 
 I had fun making this project, but I can definitely clean up my code some more.
 
-I want the live demo to be responsive and essentially look as though there is an emulated iPhone running the calculator application on desktop-size viewports, but also look as if the calculator app is being run on the browser and fit the edges of the calculator to the mobile window.
+Also, Chrome DevTools mobile resolution emulation, I quickly found out, is not accurate. Running the live demo of the calculator on my iPhone 11 showed a completely different version than what the DevTools showed me with divs misplaced everywhere. I tried to fix as much as I can without using a million commits on this repo, but this is definitely something that I will come back to in the future.
