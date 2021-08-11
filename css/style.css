@@ -124,13 +124,15 @@ button {
 }
 
 @media only screen and (max-height: 900px) {
-    .display .current #current-text {
+    /* .display .current #current-text {
         margin-bottom: -.5em;
     }
 
     .main {
         gap: 0em;
-    }
+    } */
+
+    /* TODO: FIX MOBILE VIEW!!! */
 }
 
 
