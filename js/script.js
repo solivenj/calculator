@@ -222,7 +222,7 @@ function handleKBInput(event) {
         handleDelete();
     } else if (event.key == "Escape") {
         clearCalc();
-    } else if (event.key == '-') {
+    } else if (event.key == '_') {
         handleInput("+/-");
     } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
         handleOperator(operator_conversions[event.key]);
