@@ -77,20 +77,27 @@ function handleNegative() {
 
 function setFontSize() {
     let fontSize = "";
+    let paddingTop = "";
 
     if (currentText.textContent.length <= 6) {
         fontSize = "5em";
+        paddingTop = ".25em";
     } else if (currentText.textContent.length <= 7) {
         fontSize = "4.25em";
+        paddingTop = ".46em";
     } else if (currentText.textContent.length <= 8) {
         fontSize = "4em";
+        paddingTop = ".55em";
     } else if (currentText.textContent.length <= 9) {
         fontSize = "3.75em";
+        paddingTop = ".65em";
     } else {
         fontSize = "3.5em";
+        paddingTop = ".75em";
     }
 
     currentText.style.fontSize = fontSize;
+    currentText.style.paddingTop = paddingTop;
 }
 
 function handleInput(value) {
